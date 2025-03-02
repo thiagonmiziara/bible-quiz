@@ -10,17 +10,38 @@
 }
 
 :root {
-  --primary: #primary-400;
-  --primary-light: #primary-200;
-  --primary-dark: #primary-800;
+  :root {
+    --primary-100: #e0f2f1;
+    --primary-200: #b2dfdb;
+    --primary-300: #80cbc4;
+    --primary-400: #4db6ac;
+    --primary-500: #26a69a;
+    --primary-600: #009688;
+    --primary-700: #00897b;
+    --primary-800: #00796b;
+    --primary-900: #00695c;
 
-  --secondary: #secondary-400;
-  --secondary-light: #secondary-200;
-  --secondary-dark: #secondary-800;
+    --secondary-100: #ffebee;
+    --secondary-200: #ffcdd2;
+    --secondary-300: #ef9a9a;
+    --secondary-400: #e57373;
+    --secondary-500: #ef5350;
+    --secondary-600: #f44336;
+    --secondary-700: #e53935;
+    --secondary-800: #d32f2f;
+    --secondary-900: #c62828;
 
-  --accent: #accent-400;
-  --accent-light: #accent-200;
-  --accent-dark: #accent-800;
+    --accent-100: #f3e5f5;
+    --accent-200: #e1bee7;
+    --accent-300: #ce93d8;
+    --accent-400: #ba68c8;
+    --accent-500: #ab47bc;
+    --accent-600: #9c27b0;
+    --accent-700: #8e24aa;
+    --accent-800: #7b1fa2;
+    --accent-900: #6a1b9a;
+  }
+
   --background: #background-50;
   --foreground: #foreground-900;
   --card: #background-50;
