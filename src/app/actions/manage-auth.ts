@@ -8,7 +8,7 @@ export async function manageAuth() {
     return await signIn("google", {
       redirectTo: "/quiz",
     });
-  } else {
-    return await signOut({ redirect: true, redirectTo: "/" });
   }
+
+  return await signOut({ redirect: true, redirectTo: "/" });
 }
