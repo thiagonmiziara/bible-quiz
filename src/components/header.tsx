@@ -1,15 +1,31 @@
+"use client";
+
 import Link from "next/link";
 import { Button } from "./ui/button";
 import { manageAuth } from "@/app/actions/manage-auth";
 import { FaGoogle } from "react-icons/fa";
-import { Session } from "next-auth";
 import Image from "next/image";
+import { useSession } from "next-auth/react";
 
-type HeaderProps = {
-  session: Session | null;
-};
+export default function Header() {
+  const { data: session } = useSession();
+  console.log("🚀 ~ Header ~ session:", session);
 
-export default function Header({ session }: HeaderProps) {
+  // async function testGetUser() {
+  //   try {
+  //     const response = await fetch("/api/users?userId=Ni7vFNQyj7NAz1knzSJv");
+  //     const data = await response.json();
+  //     console.log("🚀 ~ testGetUser ~ data:", data);
+  //     console.log("User Data:", data);
+  //   } catch (error) {
+  //     console.error("Error fetching user:", error);
+  //   }
+  // }
+
+  // useEffect(() => {
+  //   testGetUser();
+  // }, []);
+
   return (
     <header className='p-4'>
       <div className='container mx-auto max-w-6xl px-4 md:px-6'>
@@ -25,7 +41,7 @@ export default function Header({ session }: HeaderProps) {
               variant='outline'
               className='gap-2 bg-zinc-800 hover:bg-zinc-700 text-zinc-100 border-violet-500 w-full md:w-auto'
             >
-              {session ? (
+              {session?.user ? (
                 <>
                   <Image
                     src={session?.user?.image ?? "/default-image.jpg"}

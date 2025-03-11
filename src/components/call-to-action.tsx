@@ -1,14 +1,12 @@
+"use client";
 import Link from "next/link";
 import { Button } from "./ui/button";
 import { manageAuth } from "@/app/actions/manage-auth";
 import { ChevronRight } from "lucide-react";
-import { Session } from "next-auth";
+import { useSession } from "next-auth/react";
 
-type CallToActionProps = {
-  session: Session | null;
-};
-
-export default function CallToAction({ session }: CallToActionProps) {
+export default function CallToAction() {
+  const { data: session } = useSession();
   return (
     <section className='py-16 bg-gradient-to-r from-violet-900 to-cyan-900 text-zinc-100'>
       <div className='container mx-auto max-w-6xl px-4 md:px-6 text-center'>

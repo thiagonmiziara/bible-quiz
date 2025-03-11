@@ -12,9 +12,9 @@ import {
   XCircle,
   Trophy,
   BookOpen,
-  User,
 } from "lucide-react";
 import Image from "next/image";
+import { api } from "@/lib/axios";
 
 type QuizData = {
   question_id: number;
@@ -27,6 +27,7 @@ type QuizData = {
 
 export default function QuizPage() {
   const { data: session } = useSession();
+  console.log("🚀 ~ QuizPage ~ session:", session?.user.id);
   const [quiz, setQuiz] = useState<QuizData | null>(null);
   const [loading, setLoading] = useState(true);
   const [selected, setSelected] = useState<string | null>(null);
@@ -55,7 +56,6 @@ export default function QuizPage() {
 
   useEffect(() => {
     if (correct !== null && timeLeft > 0) {
-      // Alterado para verificar se correct está definido
       const timer = setInterval(() => {
         setTimeLeft((prevTime) => {
           if (prevTime <= 1) {
@@ -70,7 +70,7 @@ export default function QuizPage() {
 
       return () => clearInterval(timer);
     }
-  }, [correct, timeLeft]);
+  }, [correct, selected, timeLeft]);
 
   async function fetchQuiz() {
     setLoading(true);
@@ -80,17 +80,27 @@ export default function QuizPage() {
     setTimeLeft(10);
 
     try {
-      const response = await fetch("/api/quiz");
-      if (!response.ok) {
-        throw new Error("Error fetching quiz");
-      }
-      const data = await response.json();
+      const response = await api.get("/quiz");
+
+      const data = response.data;
       setQuiz(data);
       setLoading(false);
     } catch (error) {
       console.error("Erro ao buscar quiz:", error);
     }
   }
+
+  const handleUpdateUserPoints = async () => {
+    try {
+      await api.put("/users", {
+        userId: session?.user.id,
+        points: score + 100,
+        answerId: quiz?.question_id,
+      });
+    } catch (error) {
+      console.error("Erro ao atualizar pontos do usuário:", error);
+    }
+  };
 
   function handleAnswer(option: string) {
     setSelected(option);
@@ -100,6 +110,7 @@ export default function QuizPage() {
 
     if (isCorrect) {
       setScore((prev) => prev + 100);
+      handleUpdateUserPoints();
     }
 
     if (quiz?.question_id !== undefined) {
