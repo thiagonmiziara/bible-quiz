@@ -17,7 +17,10 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
   callbacks: {
     async session({ session, user }) {
       session.user.id = user.id;
-      return session;
+      return {
+        ...session,
+        url: `/app/user/${user.id}`,
+      };
     },
   },
 });

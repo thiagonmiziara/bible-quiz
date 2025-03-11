@@ -1,6 +1,6 @@
 "use client";
 import { useSession } from "next-auth/react";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -41,10 +41,23 @@ export default function QuizPage() {
   const [timeLeft, setTimeLeft] = useState(10);
 
   const maxScore = 1000;
+  const getUser = useCallback(async (userId: string) => {
+    try {
+      const response = await api.get(`/users/${userId}`);
+      console.log("🚀 ~ getUser ~ response:", response);
+      return response.data;
+    } catch (error) {
+      console.error("Erro ao buscar usuário:", error);
+      throw error;
+    }
+  }, []);
 
   useEffect(() => {
     fetchQuiz();
-  }, []);
+    if (session?.user.id) {
+      getUser(session.user.id as string);
+    }
+  }, [getUser, session?.user.id]);
 
   useEffect(() => {
     if (maxScore > 0) {

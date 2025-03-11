@@ -52,17 +52,11 @@ export async function updateUserPoints(userId: string, points: number) {
 
 export async function getUser(userId: string) {
   try {
-    // Referência ao documento do usuário
     const userRef = db.doc(`users/${userId}`);
-    const docSnap = await userRef.get();
-
-    if (docSnap.exists) {
-      return { ...docSnap.data(), user_id: userId };
-    } else {
-      return null;
-    }
+    const userSnapshot = await userRef.get();
+    return userSnapshot.data() as User;
   } catch (error) {
-    console.error("Error fetching user:", error);
+    console.error("Error getting user:", error);
     throw error;
   }
 }

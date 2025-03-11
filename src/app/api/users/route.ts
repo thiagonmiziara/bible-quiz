@@ -1,9 +1,9 @@
 import { NextResponse } from "next/server";
 import {
-  getUser,
   setUser,
   addAnswerToUser,
   updateUserPoints,
+  getUser,
 } from "@/services/db";
 
 export async function POST(request: Request) {
@@ -36,24 +36,20 @@ export async function PUT(request: Request) {
     );
   }
 }
+
 export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
     const userId = searchParams.get("userId");
-
     if (!userId) {
       return NextResponse.json(
-        { error: "userId is required" },
+        { error: "User ID is required" },
         { status: 400 }
       );
     }
-
     const user = await getUser(userId);
     return NextResponse.json(user);
   } catch {
-    return NextResponse.json(
-      { error: "Failed to fetch user" },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: "Failed to get user" }, { status: 500 });
   }
 }
