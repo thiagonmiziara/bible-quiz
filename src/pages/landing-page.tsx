@@ -1,7 +1,6 @@
 import Header from "@/components/header";
 import Hero from "@/components/hero";
 import VerseDay from "@/components/verse-day";
-// import LoginSection from "@/components/login-section";
 import { Testimonials } from "@/components/testimonials";
 import CallToAction from "@/components/call-to-action";
 import Footer from "@/components/footer";
@@ -12,7 +11,6 @@ export default function LandingPage() {
       <Header />
       <Hero />
       <VerseDay />
-      {/* <LoginSection session={session} /> */}
       <Testimonials />
       <CallToAction />
       <Footer />

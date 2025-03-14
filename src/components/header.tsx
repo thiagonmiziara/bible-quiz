@@ -9,22 +9,6 @@ import { useSession } from "next-auth/react";
 
 export default function Header() {
   const { data: session } = useSession();
-  console.log("🚀 ~ Header ~ session:", session);
-
-  // async function testGetUser() {
-  //   try {
-  //     const response = await fetch("/api/users?userId=Ni7vFNQyj7NAz1knzSJv");
-  //     const data = await response.json();
-  //     console.log("🚀 ~ testGetUser ~ data:", data);
-  //     console.log("User Data:", data);
-  //   } catch (error) {
-  //     console.error("Error fetching user:", error);
-  //   }
-  // }
-
-  // useEffect(() => {
-  //   testGetUser();
-  // }, []);
 
   return (
     <header className='p-4'>

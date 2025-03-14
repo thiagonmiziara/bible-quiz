@@ -1,3 +1,4 @@
+import { auth } from "@/lib/auth";
 import { NextResponse } from "next/server";
 
 const questions = [
@@ -61,10 +62,76 @@ const questions = [
     context:
       "O Senhor fez a jumenta falar com Balaão quando este ia ao encontro de Balaque para amaldiçoar o povo de Deus em troca de riquezas. Cf. Números 22:28",
   },
+  {
+    question_id: 7,
+    question:
+      "Enquanto pastor de ovelhas, Davi protegeu seu rebanho de dois animais perigosos. Quais?",
+    options: [
+      "A) serpente e dromedário",
+      "B) urso e leão",
+      "C) cobra e lobo",
+      "D) urso e escorpião",
+    ],
+    correct_answer: "B) urso e leão",
+    context:
+      "Um leão e um urso foram os animais que Davi matou. Cf. 1 Samuel 17:34-37",
+  },
+  {
+    question_id: 8,
+    question:
+      "Quando bebê, como Moisés foi salvo do decreto infanticida do Faraó?",
+    options: [
+      "A) Foi levado às pressas para fora do Egito",
+      "B) Foi escondido dentro de uma caverna",
+      "C) Foi colocado num cesto e lançado no rio",
+      "D)  Foi levado ao templo para servir a Deus",
+    ],
+    correct_answer: "C) Foi colocado num cesto e lançado no rio",
+    context:
+      " Moisés foi colocado num cestinho e deixado à beira rio. A filha do Faraó viu e adotou-o como seu filho.",
+  },
 ];
 
+interface User {
+  id: string;
+  name: string;
+  email: string;
+  image: string;
+  emailVerified?: string | null;
+  questionAnswer?: number[];
+  points?: number;
+  sessionToken?: string;
+  expires?: string;
+}
 export async function GET() {
-  const randomIndex = Math.floor(Math.random() * questions.length);
-  const question = questions[randomIndex];
-  return NextResponse.json(question);
+  const session = await auth();
+  if (!session) {
+    return NextResponse.json({ error: "Não autorizado" }, { status: 401 });
+  }
+
+  try {
+    const answeredQuestions =
+      (session.user as unknown as User).questionAnswer || [];
+
+    const availableQuestions = questions.filter(
+      (q) => !answeredQuestions.includes(q.question_id)
+    );
+
+    if (availableQuestions.length === 0) {
+      return NextResponse.json({
+        message: "Todas as perguntas já foram respondidas!",
+      });
+    }
+
+    const randomIndex = Math.floor(Math.random() * availableQuestions.length);
+    const question = availableQuestions[randomIndex];
+
+    return NextResponse.json(question);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  } catch (error) {
+    return NextResponse.json(
+      { error: "Erro ao buscar perguntas" },
+      { status: 500 }
+    );
+  }
 }

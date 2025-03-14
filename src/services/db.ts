@@ -1,4 +1,3 @@
-// src/services/db.ts
 import { db } from "@/lib/firebase";
 import { FieldValue } from "firebase-admin/firestore";
 
@@ -52,11 +51,16 @@ export async function updateUserPoints(userId: string, points: number) {
 
 export async function getUser(userId: string) {
   try {
-    const userRef = db.doc(`users/${userId}`);
+    const userRef = db.collection("users").doc(userId);
     const userSnapshot = await userRef.get();
+
+    if (!userSnapshot.exists) {
+      throw new Error("Usuário não encontrado");
+    }
+
     return userSnapshot.data() as User;
   } catch (error) {
-    console.error("Error getting user:", error);
+    console.error("Erro ao buscar usuário:", error);
     throw error;
   }
 }

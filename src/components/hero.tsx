@@ -1,6 +1,15 @@
-import { BookOpen } from "lucide-react";
+"use client";
 
-export default async function Hero() {
+import { BookOpen, ChevronRight } from "lucide-react";
+import { Button } from "./ui/button";
+import Link from "next/link";
+import { useSession } from "next-auth/react";
+import { manageAuth } from "@/app/actions/manage-auth";
+import { FaGoogle } from "react-icons/fa";
+
+export default function Hero() {
+  const { data: session } = useSession();
+
   return (
     <section className='py-16 md:py-24'>
       <div className='container mx-auto max-w-6xl px-4 md:px-6'>
@@ -13,6 +22,24 @@ export default async function Hero() {
               Aprenda, cresça e divirta-se com nosso quiz bíblico interativo. Um
               jeito divertido de aprofundar sua fé.
             </p>
+
+            <form action={manageAuth} className='flex gap-2'>
+              <Button
+                size='lg'
+                className='bg-violet-600 hover:bg-violet-700 text-zinc-100'
+              >
+                {session?.user ? (
+                  <Link href='/quiz' className='flex items-center'>
+                    Jogar Agora <ChevronRight className='ml-2 h-4 w-4' />
+                  </Link>
+                ) : (
+                  <>
+                    <FaGoogle className='h-5 w-5 text-violet-100' />
+                    Entrar com Google
+                  </>
+                )}
+              </Button>
+            </form>
           </div>
           <div className='flex-1 flex justify-center'>
             <div className='w-full max-w-md aspect-square bg-zinc-800 rounded-lg shadow-lg p-6 flex items-center justify-center'>
