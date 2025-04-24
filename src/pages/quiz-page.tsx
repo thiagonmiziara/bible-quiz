@@ -32,8 +32,6 @@ export default function QuizPage() {
     setTimeLeft,
   } = useFetchQuiz();
   const { score, setScore } = useScoreQuiz();
-  const maxScore = 1000;
-  const progress = (score / maxScore) * 100;
 
   useEffect(() => {
     fetchQuiz();
@@ -94,12 +92,7 @@ export default function QuizPage() {
       <div className='w-full max-w-3xl'>
         <QuizHeader score={score} />
 
-        <QuizProgress
-          score={score}
-          maxScore={maxScore}
-          isLoading={loading}
-          progress={progress}
-        />
+        <QuizProgress score={score} isLoading={loading} />
 
         {loading ? (
           <div className='flex flex-col items-center justify-center py-12'>
