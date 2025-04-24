@@ -1,15 +1,16 @@
 "use client";
 
 import { FaGoogle } from "react-icons/fa";
-import { manageAuth } from "@/app/actions/manage-auth";
 import { Button } from "./ui/button";
-import { useSession } from "next-auth/react";
-import { useUser } from "@/hooks/use-user";
+import { signIn, useSession } from "next-auth/react";
 
 export default function LoginSection() {
   const { data: session } = useSession();
-  const { loading } = useUser(session?.user.id);
-  console.log("🚀 ~ LoginSection ~ loading:", loading);
+
+  const handleSignIn = () => {
+    signIn("google", { callbackUrl: "/quiz" });
+  };
+
   return (
     <section className='py-16'>
       <div className='container mx-auto max-w-6xl px-4 md:px-6'>
@@ -26,7 +27,7 @@ export default function LoginSection() {
             variant='outline'
             size='lg'
             className='gap-2 bg-zinc-800 hover:bg-zinc-700 text-zinc-100 border-violet-500 w-full md:w-auto'
-            onClick={manageAuth}
+            onClick={handleSignIn}
           >
             <FaGoogle className='h-5 w-5 text-violet-400' />
             {session ? "Sair" : "Entrar com Google"}

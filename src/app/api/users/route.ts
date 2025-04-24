@@ -39,11 +39,10 @@ export async function PUT(request: Request) {
 
 export async function GET(request: Request) {
   try {
-    const body = await request.json().catch(() => null); // Tenta pegar o corpo da requisição
-    let userId = body?.userId; // Tenta pegar userId do corpo, se existir
+    const body = await request.json().catch(() => null);
+    let userId = body?.userId;
 
     if (!userId) {
-      // Tenta pegar userId da URL (caso venha como query param)
       const { searchParams } = new URL(request.url);
       userId = searchParams.get("userId");
     }

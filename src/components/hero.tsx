@@ -3,12 +3,15 @@
 import { BookOpen, ChevronRight } from "lucide-react";
 import { Button } from "./ui/button";
 import Link from "next/link";
-import { useSession } from "next-auth/react";
-import { manageAuth } from "@/app/actions/manage-auth";
+import { useSession, signIn } from "next-auth/react";
 import { FaGoogle } from "react-icons/fa";
 
 export default function Hero() {
   const { data: session } = useSession();
+
+  const handleSignIn = () => {
+    signIn("google", { callbackUrl: "/quiz" });
+  };
 
   return (
     <section className='py-16 md:py-24'>
@@ -23,10 +26,12 @@ export default function Hero() {
               jeito divertido de aprofundar sua fé.
             </p>
 
-            <form action={manageAuth} className='flex gap-2'>
+            <div className='flex gap-2'>
               <Button
                 size='lg'
                 className='bg-violet-600 hover:bg-violet-700 text-zinc-100'
+                onClick={!session?.user ? handleSignIn : undefined}
+                type='button'
               >
                 {session?.user ? (
                   <Link href='/quiz' className='flex items-center'>
@@ -39,7 +44,7 @@ export default function Hero() {
                   </>
                 )}
               </Button>
-            </form>
+            </div>
           </div>
           <div className='flex-1 flex justify-center'>
             <div className='w-full max-w-md aspect-square bg-zinc-800 rounded-lg shadow-lg p-6 flex items-center justify-center'>

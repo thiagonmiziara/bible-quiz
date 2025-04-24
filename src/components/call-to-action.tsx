@@ -1,12 +1,16 @@
 "use client";
 import Link from "next/link";
 import { Button } from "./ui/button";
-import { manageAuth } from "@/app/actions/manage-auth";
 import { ChevronRight } from "lucide-react";
-import { useSession } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 
 export default function CallToAction() {
   const { data: session } = useSession();
+
+  const handleSignIn = () => {
+    signIn("google", { callbackUrl: "/quiz" });
+  };
+
   return (
     <section className='py-16 bg-gradient-to-r from-violet-900 to-cyan-900 text-zinc-100'>
       <div className='container mx-auto max-w-6xl px-4 md:px-6 text-center'>
@@ -21,7 +25,7 @@ export default function CallToAction() {
           <Button
             size='lg'
             className='bg-amber-500 hover:bg-amber-600 text-zinc-900'
-            onClick={manageAuth}
+            onClick={handleSignIn}
           >
             <Link href={"/quiz"} className='flex items-center'>
               Jogar Agora <ChevronRight className='ml-2 h-4 w-4' />

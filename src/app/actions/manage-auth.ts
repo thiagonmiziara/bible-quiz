@@ -1,14 +1,11 @@
 "use server";
 
-import { auth, signIn, signOut } from "@/lib/auth";
+import { signOut } from "next-auth/react";
 
-export async function manageAuth() {
-  const session = await auth();
-  if (!session) {
-    return await signIn("google", {
-      redirectTo: `/quiz`,
-    });
+export async function signOutAction() {
+  try {
+    await signOut({ redirect: true, redirectTo: "/" });
+  } catch (error) {
+    console.error("Erro ao fazer signOut via Server Action:", error);
   }
-
-  return await signOut({ redirect: true, redirectTo: "/" });
 }

@@ -2,13 +2,16 @@
 
 import Link from "next/link";
 import { Button } from "./ui/button";
-import { manageAuth } from "@/app/actions/manage-auth";
 import { FaGoogle } from "react-icons/fa";
 import Image from "next/image";
-import { useSession } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 
 export default function Header() {
   const { data: session } = useSession();
+
+  const handleSignIn = () => {
+    signIn("google", { callbackUrl: "/quiz" });
+  };
 
   return (
     <header className='p-4'>
@@ -20,7 +23,7 @@ export default function Header() {
             </Link>
           </div>
 
-          <form action={manageAuth} className='flex gap-2'>
+          <form action={handleSignIn} className='flex gap-2'>
             <Button
               variant='outline'
               className='gap-2 bg-zinc-800 hover:bg-zinc-700 text-zinc-100 border-violet-500 w-full md:w-auto'
