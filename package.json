@@ -45,7 +45,7 @@
     "date-fns": "4.1.0",
     "embla-carousel-react": "8.5.1",
     "firebase-admin": "12.06",
-    "framer-motion": "^10.16.4",
+    "framer-motion": "^12.9.1",
     "input-otp": "1.4.1",
     "lucide-react": "^0.454.0",
     "next": "15.2.0",
@@ -67,6 +67,7 @@
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4",
+    "@types/firebase": "^11.0.0",
     "@types/next-auth": "^3.13.0",
     "@types/node": "^20",
     "@types/react": "^19",
@@ -74,7 +75,6 @@
     "eslint": "^9",
     "eslint-config-next": "15.2.0",
     "tailwindcss": "^4",
-    "typescript": "^5",
-    "@types/firebase": "^11.0.0"
+    "typescript": "^5"
   }
 }
