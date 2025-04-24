@@ -67,7 +67,6 @@
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4",
-    "@types/firebase": "^11.0.0",
     "@types/next-auth": "^3.13.0",
     "@types/node": "^20",
     "@types/react": "^19",
